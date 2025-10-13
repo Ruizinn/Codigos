@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+struct Endereco{
+    string cidade;
+    string rua;
+};
+
+struct Escola{
+    string nome;
+    Endereco Endereco;   
+};
+
+struct Nome{
+    string aluno;
+    int numero;
+    Escola Escola;
+};
+
+Nome n1 = {"Rui", 12,{"ENTA",{"Ponta Delgada","Rua do Carvalho"}}};
+
+
+int main(){
+    
+    return 0;
+}
