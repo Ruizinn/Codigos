@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+struct Jogo{
+    char jogada;
+    bool ocupada = false;
+};
+
+Jogo galo[3][3];
+
+        void mostrar(){
+    cout << "Jogo do galo" << endl;
+    cout << "   1   2   3" << endl;
+    cout << "1 [" << galo[0][0].jogada << "] [" << galo[0][1].jogada << "] [" << galo[0][2].jogada << "]" << endl;
+    cout << "2 [" << galo[1][0].jogada << "] [" << galo[1][1].jogada << "] [" << galo[1][2].jogada << "]" << endl;
+    cout << "3 [" << galo[2][0].jogada << "] [" << galo[2][1].jogada << "] [" << galo[2][2].jogada << "]" << endl;
+        }
+
+int main(){
+    int coluna;
+    int linha;
+    char pessoa;
+    
+    mostrar();
+    cout<<"Digite se quer ser o X ou O"<<endl;
+    cin>>pessoa;
+    for(int i = 0; i<=8;i++){
+    cout<<"Digite a coluna que queira jogar"<<endl;
+    cin >> linha;
+    cout<<"Digite a liha que queira jogar"<<endl;
+    cin >> coluna;
+
+    galo[coluna-1][linha-1].jogada = pessoa;
+    galo[coluna-1][linha-1].ocupada = true;
+
+    mostrar();
+    if(pessoa = 'X'){
+        pessoa = 'O';
+    }else{
+        pessoa = 'X';
+    }
+}
+}
