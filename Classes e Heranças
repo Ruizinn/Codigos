@@ -1,0 +1,105 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Veiculo {
+private:
+    string marca;
+    string modelo;
+    double combustivel;        
+    double capacidadeTanque;  
+
+public:
+    Veiculo(string m, string mod, double cap)
+        : marca(m), modelo(mod), combustivel(0), capacidadeTanque(cap) {}
+
+    string getDescricao() const {
+        return marca + " " + modelo;
+    }
+
+    void abastecer(double litros) {
+        if (litros <= 0) {
+            cout << "Erro: Quantidade invalida.\n";
+            return;
+        }
+
+        if (combustivel + litros > capacidadeTanque) {
+            combustivel = capacidadeTanque;
+            cout << "Tanque cheio! (Excesso descartado)\n";
+        } else {
+            combustivel += litros;
+        }
+
+        cout << "Abastecido. Nivel atual: " << combustivel << "L\n";
+    }
+
+    virtual void mostrarDetalhes() const {
+        cout << "Veiculo: " << getDescricao()
+                  << " | Combustivel: " << combustivel << "L\n";
+    }
+
+protected:
+    double getCombustivel() const {
+        return combustivel;
+    }
+
+    void gastarCombustivel(double valor) {
+        combustivel -= valor;
+        if (combustivel < 0)
+            combustivel = 0;
+    }
+};
+
+class Carro : public Veiculo {
+private:
+    int numPassageiros;
+
+public:
+    Carro(string m, string mod, double cap, int passageiros)
+        : Veiculo(m, mod, cap), numPassageiros(passageiros) {}
+
+    void mostrarDetalhes() const override {
+        Veiculo::mostrarDetalhes();
+        cout << "Numero de passageiros: " << numPassageiros << "\n";
+    }
+};
+
+class Camiao : public Veiculo {
+private:
+    double cargaMax; 
+
+public:
+    Camiao(string m, string mod, double cap, double carga)
+        : Veiculo(m, mod, cap), cargaMax(carga) {}
+
+    void viajar(float km) {
+        double consumo = km * 0.5; 
+        if (getCombustivel() < consumo) {
+            cout << "Erro: Combustivel insuficiente para viajar " << km << " km.\n";
+        } else {
+            gastarCombustivel(consumo);
+            cout << "Viagem concluida. Combustivel restante: " << getCombustivel() << "L\n";
+        }
+    }
+
+    void mostrarDetalhes() const override {
+        Veiculo::mostrarDetalhes();
+        cout << "Carga maxima: " << cargaMax << " toneladas\n";
+    }
+};
+
+int main() {
+    Carro meuCarro("Honda", "Civic", 40, 5);
+    meuCarro.abastecer(20);
+    meuCarro.mostrarDetalhes();
+
+    Camiao meuCamiao("Volvo", "FH16", 300, 20);
+    meuCamiao.abastecer(150);
+    meuCamiao.mostrarDetalhes();
+    meuCamiao.viajar(200);
+    meuCamiao.viajar(100);
+    meuCamiao.abastecer(5000);
+
+    return 0;
+}
